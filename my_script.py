@@ -96,11 +96,17 @@ equation_deck = {
          "1+9",
          "9+1"]
 }
-"""
-    This is reshuffles both decks hopefully after calling every value left 
-    in the deck.
-"""
+
 def shuffle_decks():
+    """
+    This is reshuffles both decks after calling every value left 
+    in the deck.
+    
+    Side Effects:
+        - Prints the drawn values and equations to the terminal.
+        - Shuffles both decks in place.
+        - Clears and reuses lists to simulate a continuous game cycle.
+    """
     
     # Value Deck
     """This creates a new list of values 1-10 and shuffles them."""
@@ -109,16 +115,16 @@ def shuffle_decks():
         value_deck.append(value)
     random.shuffle(value_deck)
     
-    """This creates a used value list so when a value is picked from the deck 
-       there are duplicates and the deck can restart and shuffle."""
+    """This creates a used values list so when a value is picked from the deck 
+       there are no duplicates and the deck can reshuffle."""
     used_values = []
     for value_card in value_deck:
         print(f"Value: {value_card}")
         used_values.append(value_card)
     
-    """This just prints something saying the deck will reshuffle and the cards 
-       get randomized again. This will get rearraged in the final depending on 
-       the players decks"""
+    """This just prints a message saying the deck will reshuffle and the cards 
+       will get randomized again. 
+    """
     print("All value cards have been used. Reshuffling the deck.")
     random.shuffle(value_deck)
     used_values.clear()
@@ -130,16 +136,16 @@ def shuffle_decks():
     equations_list = []
     for value, equations in equation_deck.items():
         for equation in equations:
-            equations_list.append((equation))
+            equations_list.append(equation)
     random.shuffle(equations_list)
     
     """This creates another used list but for the equations so there are no 
        duplicates. Then it prints out each equation randomly until it needs to
-       reshuffles. """
+       reshuffle. """
     used_equations = []
     for equation in equations_list:
         print(f"Equation picked from deck: {equation}")
-        used_equations.append((equation))
+        used_equations.append(equation)
         
     """Does the same thing at the end of the value deck part but with 
        the equations."""
