@@ -233,8 +233,35 @@ player_hands, updated_deck = deal_cards(equation_deck, 2)
 print(f"Player One's hand: {player_hands[0]} Player Two's hand: {player_hands[1]}")
 print(f"Remaining cards in deck: {updated_deck}")
 
-        
-    
+# checks for winner
+def check_for_winner(player_hands):
+    """
+    Determines any player has won (has one card left).
+
+    A player wins when their hand contains zero cards. This function
+    checks all player hands and returns the index of the winning player.
+
+    Parameters:
+        player_hands (list): 
+            A list of player hands, where each hand is a list of cards.
+
+    Returns:
+        int or None:
+            The index of the winning player if someone has won.
+            Returns None if no player has an empty hand.
+    """
+    for i in range(len(player_hands)):   
+        hand = player_hands[i]        
+        if len(hand) == 0:               
+            return i                 
+
+    return None
+
+#sample data to test check_for_winner function
+sample_hands = [[3+1, 4+5, 6+7], [], [5+8,]]
+if check_for_winner(sample_hands) is not None:
+    player_num = check_for_winner(sample_hands) + 1
+    print(f"Player {player_num} has won!")
     
     
     
