@@ -1,4 +1,9 @@
 import random
+from argparse import ArgumentParser
+import re
+import sys
+import copy
+
 
 #Jordan worte this code
 # Equation_deck Dictionary only 1-10 add and sub.
@@ -154,7 +159,60 @@ def shuffle_decks():
             
 shuffle_decks()
     
+#shara's code
+
     
+
+def deal_cards(equations_list, num_players):
+    """
+    Deal 7 random equation cards to each player from a list of equations taken
+    from equation deck.
+
+    This function takes a list of equation strings and deals 7 random, 
+    non-repeating equations to each player. Dealt cards are removed from 
+    the deck to ensure no duplicates. The function returns both the 
+    list of player hands and the remaining deck after dealing.
+
+    Parameters:
+        equations_list (list):
+            A list of equation strings that represents the full deck.
+        num_players (int):
+            Number of players to deal cards to. Each player receives 7 cards.
+
+    Returns:
+        tuple:
+            - hands (list of lists): 
+                A list where each item is a player's hand 
+            - deck (list):
+                The remaining equation cards after dealing the cards.
+    """
+
+    deck = []
+    for card, card_list in equation_deck.items():
+        for equation in card_list:
+            deck.append(equation)
+    hands = []
+
+    for player in range(num_players):
+        player_hand = random.sample(deck, 7)
+        hands.append(player_hand)
+    
+        for card in player_hand:
+            deck.remove(card)
+
+    return hands, deck
+
+
+player_hands, updated_deck = deal_cards(equation_deck, 2)
+print(f"Player One's hand: {player_hands[0]} Player Two's hand: {player_hands[1]}")
+print(f"Remaining cards in deck: {updated_deck}")
+
+        
+    
+    
+    
+      
+        
         
        
             
