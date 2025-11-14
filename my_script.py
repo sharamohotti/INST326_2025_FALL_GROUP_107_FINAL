@@ -156,7 +156,36 @@ def shuffle_decks():
        the equations."""
     print("All equations have been used reshuffling.")
     used_equations.clear()
-            
+    
+    # Murad wrote this method
+def find_playable_cards(player_hand, drawn_value):
+    """
+    Returns all equations in the player's hand that evaluate to the drawn value.
+    If none match, returns an empty list (meaning the player should draw a card).
+
+    Args:
+        player_hand (list[str]): All equation cards as strings, e.g. ["2+3", "7-4"]
+        drawn_value (int): Value card drawn, e.g. 5
+
+    Returns:
+        list[str]: All playable equation cards matching the drawn value.
+    """
+
+    # This creates an empty list that will store the equations that match
+    playable_cards = []
+
+    # This loops through every equation in the player's hand
+    for equation in player_hand:
+        # This evaluates the equation string into a number result
+        calculated_value = eval(equation)
+
+        # This checks if the result of the equation matches the drawn value
+        if calculated_value == drawn_value:
+            playable_cards.append(equation)
+
+    # This returns all equations that match the value card
+    return playable_cards
+    
 shuffle_decks()
     
 #shara's code
