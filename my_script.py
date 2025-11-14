@@ -189,9 +189,6 @@ def find_playable_cards(player_hand, drawn_value):
 shuffle_decks()
     
 #shara's code
-
-    
-
 def deal_cards(equations_list, num_players):
     """
     Deal 7 random equation cards to each player from a list of equations taken
@@ -231,12 +228,13 @@ def deal_cards(equations_list, num_players):
 
     return hands, deck
 
-
+# this checks that the function outputs correctly
 player_hands, updated_deck = deal_cards(equation_deck, 2)
 print(f"Player One's hand: {player_hands[0]} Player Two's hand: {player_hands[1]}")
 print(f"Remaining cards in deck: {updated_deck}")
 
         
+    
     
     
     
