@@ -257,11 +257,13 @@ def check_for_winner(player_hands):
 
     return None
 
-#sample data to test check_for_winner function
+#sample data to test check_for_winner function, and end game if there is winner
+
 sample_hands = [[3+1, 4+5, 6+7], [], [5+8,]]
 if check_for_winner(sample_hands) is not None:
     player_num = check_for_winner(sample_hands) + 1
     print(f"Player {player_num} has won!")
+    sys.exit()
     
     
     
