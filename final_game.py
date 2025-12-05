@@ -96,7 +96,6 @@ equation_deck = {
          "9+1"]
 }
 
-
 class MathCardGame:
     
     def __init__(self, player1, player2):
@@ -150,16 +149,16 @@ class MathCardGame:
         
     def display_game(self):
         print("------- Welcome to the Math Game -------\n")
-        self.player1 = input("Player 1, Please enter your name: ")
-        self.player2 = input("Player 2, Please enter your name: ")
+        self.player1 = input(f"Player 1, Please enter your name: ")
+        self.player2 = input(f"Player 2, Please enter your name: ")
         self.shuffle_decks()
         print()
         
         print("-----Dealing Cards-----")
         # calls deals cards method
         
-        print(f"{self.player1}'s deck: ")# add prints player 1 card list
-        print(f"{self.player2}'s deck: \n")# add prints player 2 card list
+        print(f"{self.player1}'s deck: {self.player1_hand}")# add prints player 1 card list
+        print(f"{self.player2}'s deck: {self.player2_hand}\n")# add prints player 2 card list
         print(f"------The value card is : -----")# adds value card
         
         # calls turn method 
