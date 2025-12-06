@@ -129,20 +129,40 @@ class MathCardGame:
             random.shuffle(self.value_deck)
             self.used_values.clear()
         
-        if len(self.equaiton_deck) == 0:
+        if len(self.equation_deck) == 0:
             print("All equation cards have been used. Reshuffling Deck.")
             self.equation_deck = self.used_equation[:]
             random.shuffle(self.equation_deck)
             self.used_equation.clear()
             
-    def deal_cards():
-        pass
+    def deal_cards(equations_list, num_players):
+        deck = []
+        for card, card_list in equation_deck.items():
+           for equation in card_list:
+            deck.append(equation)
+        hands = []
+
+        for player in range(num_players):
+            player_hand = random.sample(deck, 7)
+            hands.append(player_hand)
+    
+        for card in player_hand:
+            deck.remove(card)
+
+        return hands, deck
+
     
     def find_playable_cards():
         pass
     
-    def check_winner():
-        pass
+    def check_for_winner(player_hands):
+        for i in range(len(player_hands)):   
+           hand = player_hands[i]        
+        if len(hand) == 0:               
+            return i                 
+
+        return None
+        
     
     def turn():
         pass
