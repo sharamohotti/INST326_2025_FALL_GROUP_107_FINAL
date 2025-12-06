@@ -1,4 +1,3 @@
-"""
 Explain of each file:
   final_game.py: This file is our final project file that runs our game. 
   my_scrpit.py: This file was for our final project interim derliverable. 
@@ -30,5 +29,3 @@ Attribution:
 |              | Murad Habtu              |
 |              | Murad Habtu              | 
 |
-
-"""
