@@ -23,13 +23,12 @@ Annotated Bibliography:
 Attribution:
 
 |    Method    |      Primary Author      |          Techniques Demonstrated          |
----------------------------------------------------------------------
-| suffle_decks |       Jordan Stone       | Sequence Unpacking                        |
-| display_game |       Jordan Stone       | f-strings Containing Multiple Expressions |
+| suffle_decks | Jordan Stone             | Sequence Unpacking                        |
+| display_game | Jordan Stone             | f-strings Containing Multiple Expressions |
 | turn         | Shara Mohotti Arachchige |
 |              | Shara Mohotti Arachchige |
-|              |        Murad Habtu       |
-|              |        Murad Habtu       | 
+|              | Murad Habtu              |
+|              | Murad Habtu              | 
 |
 
 """
