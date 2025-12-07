@@ -22,10 +22,10 @@
 ## Attribution:
 
 - |       Method        |      Primary Author      |          Techniques Demonstrated          |
-| suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
-| display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
-| deal_cards          | Shara Mohotti Arachchige |
-| check_for_winner    | Shara Mohotti Arachchige |
-| player_turn         | Shara Mohotti Arachchige |
-| find_playable_cards | Murad Habtu              | 
-|                     | Murad Habtu
+- | suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
+- | display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
+- | deal_cards          | Shara Mohotti Arachchige |
+- | check_for_winner    | Shara Mohotti Arachchige |
+- | player_turn         | Shara Mohotti Arachchige |
+- | find_playable_cards | Murad Habtu              | 
+- | draw_value_card     | Murad Habtu              |
