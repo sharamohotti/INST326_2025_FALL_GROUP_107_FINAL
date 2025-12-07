@@ -134,7 +134,9 @@ class MathCardGame:
             self.equation_deck = self.used_equation[:]
             random.shuffle(self.equation_deck)
             self.used_equation.clear()
-            
+    
+    # add self in parameter, equations_list might not be nesscary and instead 
+    # of eqautions_deck use self.equation_deck.
     def deal_cards(equations_list, num_players):
         deck = []
         for card, card_list in equation_deck.items():
@@ -151,10 +153,15 @@ class MathCardGame:
 
         return hands, deck
 
-    
+    # use self in parameter
     def find_playable_cards():
         pass
     
+    # use self in parameter.
+    def draw_vale_card():
+    
+    # add self in parameter and try and see if you can use self.playerhand1 
+    # and self.playerhand2
     def check_for_winner(player_hands):
         for i in range(len(player_hands)):   
            hand = player_hands[i]        
@@ -163,7 +170,7 @@ class MathCardGame:
 
         return None
         
-    
+    # use self in parameter.
     def turn():
         pass
         
@@ -175,15 +182,25 @@ class MathCardGame:
         print()
         
         print("-----Dealing Cards-----")
-        # calls deals cards method
+        hands, deck = self.deal_cards(2)
+        self.player1_hand = hands[0]
+        self.player2_hand = hands[1]
         
-        print(f"{self.player1}'s deck: {self.player1_hand}")# add prints player 1 card list
-        print(f"{self.player2}'s deck: {self.player2_hand}\n")# add prints player 2 card list
+        print(f"{self.player1}'s deck: {self.player1_hand}")
+        print(f"{self.player2}'s deck: {self.player2_hand}\n")
         print(f"------The value card is : -----")# adds value card
         
-        # calls turn method 
+        ## This might work its only a guideline for me.
+        winner = None
+        while winner is None:
+            self.turn()
+            winner = self.check_for_winner([self.player1_hand, self.player2_hand])
         
-        # calls check winner method
+        if winner == 0:
+            print(f"{self.player1} wins the game!")
+        else:
+            print(f"{self.player2} wins the game!")
+        
        
 def main():
     game = MathCardGame("","")
