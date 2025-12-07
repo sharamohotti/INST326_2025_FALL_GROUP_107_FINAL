@@ -155,13 +155,13 @@ class MathCardGame:
 
     # use self in parameter
     def find_playable_cards():
-        pass
+
     
     # use self in parameter.
-    def draw_vale_card():
+    def draw_value_card():
     
     # add self in parameter and try and see if you can use self.playerhand1 
-    # and self.playerhand2
+    # and self.playerhand2 (if it helps I have a set up in the display game)
     def check_for_winner(player_hands):
         for i in range(len(player_hands)):   
            hand = player_hands[i]        
@@ -188,18 +188,22 @@ class MathCardGame:
         
         print(f"{self.player1}'s deck: {self.player1_hand}")
         print(f"{self.player2}'s deck: {self.player2_hand}\n")
-        print(f"------The value card is : -----")# adds value card
-        
+                
         ## This might work its only a guideline for me.
         winner = None
         while winner is None:
+            
+            drawn_value = self.draw_value_card()
+            print(f"------The value card is : {self.draw_value_card}-----")
+            
+            player1 = self.find_playable_cards(self.player1_hand, drawn_value)
+            player2 = self.find_playable_cards(self.player1_hand, drawn_value)
+            
+            print(f"{self.player1}'s playable cards: {self.player1_hand}")
+            print(f"{self.player2}'s playable cards: {self.player2_hand}\n")
+            
             self.turn()
             winner = self.check_for_winner([self.player1_hand, self.player2_hand])
-        
-        if winner == 0:
-            print(f"{self.player1} wins the game!")
-        else:
-            print(f"{self.player2} wins the game!")
         
        
 def main():
