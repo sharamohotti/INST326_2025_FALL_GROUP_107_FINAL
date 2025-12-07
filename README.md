@@ -21,7 +21,7 @@
 
 ## Attribution:
 
-|       Method        |      Primary Author      |          Techniques Demonstrated          |
+- |       Method        |      Primary Author      |          Techniques Demonstrated          |
 | suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
 | display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
 | deal_cards          | Shara Mohotti Arachchige |
