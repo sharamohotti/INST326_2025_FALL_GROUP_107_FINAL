@@ -1,10 +1,10 @@
 ## Explain of each file:
-  final_game.py: This file is our final project file that runs our game. 
-  my_scrpit.py: This file was for our final project interim derliverable. 
+  - final_game.py: This file is our final project file that runs our game. 
+  - my_scrpit.py: This file was for our final project interim derliverable. 
 
 ## How to run the program:
   To run the program in python all you need to type is
-  python final_game.py 
+  ** python final_game.py 
   then follow all the instructions from there like putting in 2 player names, 
   and inserting the correct equation cards if they match the value card. 
 
