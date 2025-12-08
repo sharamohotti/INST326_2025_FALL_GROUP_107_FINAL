@@ -107,6 +107,8 @@ class MathCardGame:
         self.value_deck = []
         self.player1_hand = []
         self.player2_hand = []
+        self.used_values = []
+        self.used_equation = []
         
     def shuffle_decks(self):
         first_game_run = True
@@ -151,11 +153,39 @@ class MathCardGame:
         return hands, deck
 
     # use self in parameter
-    def find_playable_cards():
-
+    def find_playable_cards(self, player_hand, drawn_value):
+        return [
+            equation
+            for equation in player_hand
+            if eval(equation) == drawn_value
+        ]
     
-    # use self in parameter.
-    def draw_value_card(self):
+    def draw_value_card(self, num_cards: int = 1):
+        if num_cards <= 0:
+            raise ValueError("num_cards must be at least 1")
+
+        def _refresh_deck():
+            self.value_deck = []
+            for v in range(1, 11):
+                self.value_deck.append(v)
+            random.shuffle(self.value_deck)
+
+        if not self.value_deck:
+            _refresh_deck()
+
+        drawn_values = []
+
+        for _ in range(num_cards):
+            if not self.value_deck:
+                _refresh_deck()
+
+            value = self.value_deck.pop()
+            drawn_values.append(value)
+
+            if hasattr(self, "used_values"):
+                self.used_values.append(value)
+
+        return drawn_values[0] if num_cards == 1 else drawn_values
     
     # add self in parameter and try and see if you can use self.playerhand1 
     # and self.playerhand2 (if it helps I have a set up in the display game)
@@ -174,8 +204,8 @@ class MathCardGame:
     # use self in parameter.
     def turn(self, drawn_value):
     
-        p1_playable = find_playable_cards(self.player1_hand, drawn_value)
-        p2_playable = find_playable_cards(self.player2_hand, drawn_value)
+        p1_playable = self.find_playable_cards(self.player1_hand, drawn_value)
+        p2_playable = self.find_playable_cards(self.player2_hand, drawn_value)
 
     #PLAYER 1
         if p1_playable:
