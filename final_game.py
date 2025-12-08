@@ -172,8 +172,42 @@ class MathCardGame:
          return None
         
     # use self in parameter.
-    def turn():
-        pass
+    def turn(self, drawn_value):
+    
+        p1_playable = find_playable_cards(self.player1_hand, drawn_value)
+        p2_playable = find_playable_cards(self.player2_hand, drawn_value)
+
+    #PLAYER 1
+        if p1_playable:
+           print(f"{self.player1}, you may play: {p1_playable}")
+           choice = input("Choose a card to play: ")
+
+        # Keep asking until player chooses a legal card
+           while choice not in p1_playable:
+            choice = input("Invalid choice. Choose again: ")
+
+           self.player1_hand.remove(choice)
+        else:
+           print(f"{self.player1} has no playable cards and passes.")
+
+    #PLAYER 2 
+        if p2_playable:
+            print(f"{self.player2}, you may play: {p2_playable}")
+            choice = input("Choose a card to play: ")
+
+            while choice not in p2_playable:
+                choice = input("Invalid choice. Choose again: ")
+
+            self.player2_hand.remove(choice)
+        else:
+            print(f"{self.player2} has no playable cards and passes.")
+
+     
+
+
+   
+         
+        
         
     def display_game(self):
         print("------- Welcome to the Math Game -------\n")
@@ -203,7 +237,7 @@ class MathCardGame:
             print(f"{self.player1}'s playable cards: {self.player1_hand}")
             print(f"{self.player2}'s playable cards: {self.player2_hand}\n")
             
-            self.turn()
+            self.turn(drawn_value)
             winner = self.check_for_winner([self.player1_hand, self.player2_hand])
         
        
