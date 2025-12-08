@@ -155,17 +155,21 @@ class MathCardGame:
 
     
     # use self in parameter.
-    def draw_value_card():
+    def draw_value_card(self):
     
     # add self in parameter and try and see if you can use self.playerhand1 
     # and self.playerhand2 (if it helps I have a set up in the display game)
-    def check_for_winner(player_hands):
-        for i in range(len(player_hands)):   
-           hand = player_hands[i]        
-        if len(hand) == 0:               
-            return i                 
+    def check_for_winner(self):
+         current = [self.player1_hand, self.player2_hand]
+         for i in range(len(current)):   
+            if len(i) == 0: 
+               if i == 0:
+                    return self.player1
+               else:
+                    return self.player2
+                                            
 
-        return None
+         return None
         
     # use self in parameter.
     def turn():
