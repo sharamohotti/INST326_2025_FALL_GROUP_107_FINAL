@@ -97,9 +97,16 @@ equation_deck = {
          "9+1"]
 }
 
-class MathCardGame:
+class NumberMatch:
     
     def __init__(self, player1, player2):
+        """
+            Initilizes a NumberMatch game with 2 players. 
+
+            Args:
+                player1 (str): Name of the first player. 
+                player2 (str): Name of the second player.
+        """
         
         self.player1 = player1
         self.player2 = player2
@@ -107,64 +114,121 @@ class MathCardGame:
         self.value_deck = []
         self.player1_hand = []
         self.player2_hand = []
-        
         self.used_values = []
         self.used_equation = []
         
     def shuffle_decks(self):
         """
-            The shuffle_decks method uses the equation deck dictionary to 
-            rearrange the order of the equation deck and value deck when first 
-            called on in the beginning of the game and later on, individually, 
-            when playing the game. 
+        Uses the equation deck dictionary to rearrange the order of the equation 
+        deck and value deck for the beginning of the game and later on, 
+        individually, when playing the game. 
+        
+        Author: Jordan Stone
+        
+        Techniques:
+            - Sequence Unpacking: used to unpakc each key, value pair from the 
+              equation deck.
             
-            Side effects: Changes the contents in the value_deck and 
-                          equation_deck while also printing shuffle messages.
-            Return (None): Only meant for the first run of the game. 
+        Side effects: Changes the contents in the value_deck and 
+                      equation_deck while also printing shuffle messages.
         """
+        
         if len(self.value_deck) == 0:
             if self.used_values:
                 print("All value cards have been used. Reshuffling the value deck.")
                 self.value_deck = self.used_values[:]
                 self.used_values.clear()
             else:
-                self.value_deck = list(range(1, 11))
+                self.value_deck = list(range(1,11))
             random.shuffle(self.value_deck)
-
-        # Shuffle equation deck
+            
         if len(self.equation_deck) == 0:
             if self.used_equation:
                 print("All equation cards have been used. Reshuffling the equation deck.")
                 self.equation_deck = self.used_equation[:]
                 self.used_equation.clear()
             else:
-                for eq_list in equation_deck.values():
-                    self.equation_deck.extend(eq_list)
+                self.equation_deck = []
+                for key, equation_list in equation_deck.items():
+                    for card in equation_list:
+                        self.equation_deck.append(card)
+        
             random.shuffle(self.equation_deck)
-
+        
         print("Decks have been shuffled.")
-    
-    
+            
     def deal_cards(self, num_players):
+        """
+        Deals 7 equation cards to each player at the start of the game.
+
+        Author: Shara Mohotti
+
+        Techniques:
+            - List comprehension: Used to rebuild the remaining deck while ensuring
+              no duplicate cards are dealt to players.
+
+        Args:
+            num_players (int): Number of players in the game.
+
+        Returns:
+            tuple: (hands, deck)
+                - hands is a list containing each player's starting hand
+                - deck is the updated equation deck with dealt cards removed
+        """
+        
         deck = copy.deepcopy(self.equation_deck)
         hands = []
 
         for player in range(num_players):
             player_hand = random.sample(deck, 7)
             hands.append(player_hand)
-            #list comprehension
             deck = [card for card in deck if card not in player_hand]
 
         return hands, deck
 
     def find_playable_cards(self, player_hand, drawn_value):
-        return [
+        """
+        Determines and returns all playable equation cards from a player's hand
+        that correctly match to a answer as the drawn value.
+
+        Author: Murad Habtu
+
+        Techniques: Generator expression - Used to efficiently filter valid equations
+              based on their evaluated result.
+
+        Args:
+            player_hand (list[str]): The player's current hand of equation cards.
+            drawn_value (int): The current value card players must match.
+
+        Returns:
+            list[str]: A list of equations from the hand that evaluate
+            to the drawn value.
+        """
+        
+        # Generator expression wrapped in list() for return
+        return (
             equation
             for equation in player_hand
             if eval(equation) == drawn_value
-        ]
-    
+        )
+            
     def draw_value_card(self, num_cards: int = 1):
+        """
+        Draws one or more value cards from the value deck. If the deck is empty,
+        it will be reshuffled before drawing.
+
+        Author: Murad Habtu
+
+        Techniques: Optional parameter - num_cards allows flexible drawing behavior.
+
+        Args: num_cards (int, optional) - Number of value cards to draw (default = 1).
+
+        Returns:
+            int or list[int]:
+                - If num_cards == 1, returns a single int value card.
+                - If num_cards > 1, returns a list of drawn value cards.
+        """
+        
         if num_cards <= 0:
             raise ValueError("num_cards must be at least 1")
 
@@ -176,19 +240,38 @@ class MathCardGame:
 
             value = self.value_deck.pop()
             drawn_values.append(value)
-
-            # Track used values so shuffle_decks can rebuild the deck later
             self.used_values.append(value)
 
         return drawn_values[0] if num_cards == 1 else drawn_values
     
     def check_for_winner(self):
+        """
+        Determines whether either player has emptied their hand and won the game.
+
+        Author: Shara Mohotti
+
+        Techniques:
+            - Conditional expression (ternary operator): Used to return
+              the winner if Player 2 has an empty hand, or None otherwise.
+
+        Returns:
+            str or None: The name of the winning player, or None if no winner exists yet.
+        """
+        
         if len(self.player1_hand) == 0:
             return self.player1
-    # conditional expression used here ↓
         return self.player2 if len(self.player2_hand) == 0 else None
         
     def draw_equation_card(self):
+        """
+        Draws a single equation card from the equation deck.
+        
+        Author: Jordan Stone
+        
+        Returns:
+            str: The equation card that was drawn from the deck.
+        """
+        
         if len(self.equation_deck) == 0:
             self.shuffle_decks()
         card = self.equation_deck.pop()
@@ -196,11 +279,27 @@ class MathCardGame:
             
     
     def turn(self, drawn_value):
-    
+        """
+        Runs a full turn for both players. Each player either plays a valid
+        equation card that matches the drawn value or draws a new card if no such
+        equation matches.
+
+        Author: Shara Mohotti
+
+        Args:
+            drawn_value (int): The value card drawn for this round, determining which
+                               equation cards are playable.
+
+        Side Effects:
+            - Modifies player hands by removing played cards or adding drawn cards.
+            - Updates the used_equation list when a card is played.
+            - Prints prompts and results for player interaction.
+        """
+        
         p1_playable = self.find_playable_cards(self.player1_hand, drawn_value)
         p2_playable = self.find_playable_cards(self.player2_hand, drawn_value)
 
-    #PLAYER 1
+        #PLAYER 1
         if p1_playable:
             print(f"{self.player1}, you may play: {p1_playable}")
             choice = input("Choose a card to play: ")
@@ -217,7 +316,7 @@ class MathCardGame:
             self.player1_hand.append(new_card)#
             print(f"{self.player1} drew {new_card}.\n")#
 
-    #PLAYER 2 
+        #PLAYER 2 
         if p2_playable:
             print(f"{self.player2}, you may play: {p2_playable}")
             choice = input("Choose a card to play: ")
@@ -233,8 +332,21 @@ class MathCardGame:
             self.player2_hand.append(new_card)#
             print(f"{self.player2} drew {new_card}.\n")#
 
-        
     def display_game(self):
+        """
+        This displays the entrie game and uses almost all of the methods in 
+        this class.
+        
+        Author: Jordan Stone
+        
+        Techniques:
+            - f-strings: formats players names, hands, and drawn values.
+            
+        Side effects:
+            - Prints game status, hands, messages, modified players hands, and 
+              updates the winner. 
+        """
+        
         print("------- Welcome to the Math Game -------\n")
         self.player1 = input(f"Player 1, Please enter your name: ")
         self.player2 = input(f"Player 2, Please enter your name: ")
@@ -277,9 +389,18 @@ class MathCardGame:
         
        
 def main():
-    game = MathCardGame("","")
+    """
+    This uses a NumberMatch game instace with empty player names and starts 
+    the game by calling the display_game() method.
+    """
+    
+    game = NumberMatch("","")
     game.display_game()
     
     
 if __name__ == "__main__":
+    """
+    Makes sure the NumberMatch game runs when it is executed. 
+    """
+    
     main()
