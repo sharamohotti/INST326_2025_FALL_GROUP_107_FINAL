@@ -175,13 +175,47 @@ class MathCardGame:
         return hands, deck
 
     def find_playable_cards(self, player_hand, drawn_value):
-        return [
-            equation
-            for equation in player_hand
+        """
+        Determines and returns all playable equation cards from a player's hand
+        that correctly match to a answer as the drawn value.
+
+        Author: Murad Habtu
+
+        Techniques: Generator expression - Used to efficiently filter valid equations
+              based on their evaluated result.
+
+        Args:
+            player_hand (list[str]): The player's current hand of equation cards.
+            drawn_value (int): The current value card players must match.
+
+        Returns:
+            list[str]: A list of equations from the hand that evaluate
+            to the drawn value.
+        """
+
+        # Generator expression wrapped in list() for return
+        return list(
+            equation for equation in player_hand
             if eval(equation) == drawn_value
-        ]
+        )
 
     def draw_value_card(self, num_cards: int = 1):
+        """
+        Draws one or more value cards from the value deck. If the deck is empty,
+        it will be reshuffled before drawing.
+
+        Author: Murad Habtu
+
+        Techniques: Optional parameter - num_cards allows flexible drawing behavior.
+
+        Args: num_cards (int, optional) - Number of value cards to draw (default = 1).
+
+        Returns:
+            int or list[int]:
+                - If num_cards == 1, returns a single int value card.
+                - If num_cards > 1, returns a list of drawn value cards.
+        """
+        
         if num_cards <= 0:
             raise ValueError("num_cards must be at least 1")
 
