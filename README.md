@@ -3,7 +3,7 @@
   - my_scrpit.py: This file was for our final project interim derliverable. 
 
 ## How to run the program:
-  To run the program in python all you need to type is
+  To run the program in python all you need to type in the command line is: 
   **python final_game.py**
   then follow all the instructions from there like putting in 2 player names, 
   and inserting the correct equation cards if they match the value card. 
@@ -24,8 +24,8 @@
 |---------------------|--------------------------|-------------------------------------------|
 | suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
 | display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
-| deal_cards          | Shara Mohotti Arachchige |
-| check_for_winner    | Shara Mohotti Arachchige |
-| player_turn         | Shara Mohotti Arachchige |
+| deal_cards          | Shara Mohotti Arachchige | Comprehensions
+| check_for_winner    | Shara Mohotti Arachchige | Conditional expressions
+| player_turn         | Shara Mohotti Arachchige | 
 | find_playable_cards | Murad Habtu              | 
 | draw_value_card     | Murad Habtu              |
