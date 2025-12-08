@@ -1,5 +1,6 @@
 import sys
 import random
+import copy
 
 equation_deck = {
     1: ["1+0",
@@ -107,72 +108,131 @@ class MathCardGame:
         self.player1_hand = []
         self.player2_hand = []
         
+        self.used_values = []
+        self.used_equation = []
+        
     def shuffle_decks(self):
-        first_game_run = True
-        
-        if first_game_run:
-            for value in range(1,11):
-                self.value_deck.append(value)
-            random.shuffle(self.value_deck)
-                
-            for key, equations in equation_deck.items():
-                for equation in equations:
-                    self.equation_deck.append(equation)
-            random.shuffle(self.equation_deck)
-            print("All cards have been shuffled")
-            first_game_run = False
-            return
-        
+        """
+            The shuffle_decks method uses the equation deck dictionary to 
+            rearrange the order of the equation deck and value deck when first 
+            called on in the beginning of the game and later on, individually, 
+            when playing the game. 
+            
+            Side effects: Changes the contents in the value_deck and 
+                          equation_deck while also printing shuffle messages.
+            Return (None): Only meant for the first run of the game. 
+        """
         if len(self.value_deck) == 0:
-            print("All value cards have been used. Reshuffling the value deck.")
-            self.value_deck = self.used_values[:]
+            if self.used_values:
+                print("All value cards have been used. Reshuffling the value deck.")
+                self.value_deck = self.used_values[:]
+                self.used_values.clear()
+            else:
+                self.value_deck = list(range(1, 11))
             random.shuffle(self.value_deck)
-            self.used_values.clear()
-        
+
+        # Shuffle equation deck
         if len(self.equation_deck) == 0:
-            print("All equation cards have been used. Reshuffling Deck.")
-            self.equation_deck = self.used_equation[:]
+            if self.used_equation:
+                print("All equation cards have been used. Reshuffling the equation deck.")
+                self.equation_deck = self.used_equation[:]
+                self.used_equation.clear()
+            else:
+                for eq_list in equation_deck.values():
+                    self.equation_deck.extend(eq_list)
             random.shuffle(self.equation_deck)
-            self.used_equation.clear()
+
+        print("Decks have been shuffled.")
     
-    # add self in parameter, equations_list might not be nesscary and instead 
-    # of eqautions_deck use self.equation_deck.
-    def deal_cards(equations_list, num_players):
-        deck = []
-        for card, card_list in equation_deck.items():
-           for equation in card_list:
-            deck.append(equation)
+    
+    def deal_cards(self, num_players):
+        deck = copy.deepcopy(self.equation_deck)
         hands = []
 
         for player in range(num_players):
             player_hand = random.sample(deck, 7)
             hands.append(player_hand)
-    
-        for card in player_hand:
-            deck.remove(card)
+            #list comprehension
+            deck = [card for card in deck if card not in player_hand]
 
         return hands, deck
 
-    # use self in parameter
-    def find_playable_cards():
-
+    def find_playable_cards(self, player_hand, drawn_value):
+        return [
+            equation
+            for equation in player_hand
+            if eval(equation) == drawn_value
+        ]
     
-    # use self in parameter.
-    def draw_value_card():
-    
-    # add self in parameter and try and see if you can use self.playerhand1 
-    # and self.playerhand2 (if it helps I have a set up in the display game)
-    def check_for_winner(player_hands):
-        for i in range(len(player_hands)):   
-           hand = player_hands[i]        
-        if len(hand) == 0:               
-            return i                 
+    def draw_value_card(self, num_cards: int = 1):
+        if num_cards <= 0:
+            raise ValueError("num_cards must be at least 1")
 
-        return None
+        drawn_values = []
+
+        for _ in range(num_cards):
+            if len(self.value_deck) == 0:
+                self.shuffle_decks()
+
+            value = self.value_deck.pop()
+            drawn_values.append(value)
+
+            # Track used values so shuffle_decks can rebuild the deck later
+            self.used_values.append(value)
+
+        return drawn_values[0] if num_cards == 1 else drawn_values
+    
+    def check_for_winner(self):
+        if len(self.player1_hand) == 0:
+            return self.player1
+    # conditional expression used here ↓
+        return self.player2 if len(self.player2_hand) == 0 else None
         
-    # use self in parameter.
-    def turn():
-        pass
+    def draw_equation_card(self):
+        if len(self.equation_deck) == 0:
+            self.shuffle_decks()
+        card = self.equation_deck.pop()
+        return card
+            
+    
+    def turn(self, drawn_value):
+    
+        p1_playable = self.find_playable_cards(self.player1_hand, drawn_value)
+        p2_playable = self.find_playable_cards(self.player2_hand, drawn_value)
+
+    #PLAYER 1
+        if p1_playable:
+            print(f"{self.player1}, you may play: {p1_playable}")
+            choice = input("Choose a card to play: ")
+
+            # Keep asking until player chooses a legal card
+            while choice not in p1_playable:
+                choice = input("Invalid choice. Choose again: ")
+
+            self.player1_hand.remove(choice)
+            self.used_equation.append(choice)#
+        else:
+            print(f"{self.player1} has no playable cards and passes.")
+            new_card = self.draw_equation_card()#
+            self.player1_hand.append(new_card)#
+            print(f"{self.player1} drew {new_card}.\n")#
+
+    #PLAYER 2 
+        if p2_playable:
+            print(f"{self.player2}, you may play: {p2_playable}")
+            choice = input("Choose a card to play: ")
+
+            while choice not in p2_playable:
+                choice = input("Invalid choice. Choose again: ")
+
+            self.player2_hand.remove(choice)
+            self.used_equation.append(choice)#
+        else:
+            print(f"{self.player2} has no playable cards and passes.")
+            new_card = self.draw_equation_card()#
+            self.player2_hand.append(new_card)#
+            print(f"{self.player2} drew {new_card}.\n")#
+
         
     def display_game(self):
         print("------- Welcome to the Math Game -------\n")
@@ -181,29 +241,39 @@ class MathCardGame:
         self.shuffle_decks()
         print()
         
-        print("-----Dealing Cards-----")
+        print("----- Dealing Cards -----\n")
         hands, deck = self.deal_cards(2)
         self.player1_hand = hands[0]
         self.player2_hand = hands[1]
         
-        print(f"{self.player1}'s deck: {self.player1_hand}")
-        print(f"{self.player2}'s deck: {self.player2_hand}\n")
-                
-        ## This might work its only a guideline for me.
+        print(f"{self.player1}'s hand: {self.player1_hand}")
+        print(f"{self.player2}'s hand: {self.player2_hand}\n")
+        
         winner = None
+        round_num = 1
+        
         while winner is None:
+            print(f"----- Round {round_num} -----")
             
             drawn_value = self.draw_value_card()
-            print(f"------The value card is : {self.draw_value_card}-----")
+            print(f"The drawn value card is: {drawn_value}")
             
-            player1 = self.find_playable_cards(self.player1_hand, drawn_value)
-            player2 = self.find_playable_cards(self.player1_hand, drawn_value)
+            p1_playable = self.find_playable_cards(self.player1_hand, drawn_value)
+            p2_playable = self.find_playable_cards(self.player2_hand, drawn_value)
             
-            print(f"{self.player1}'s playable cards: {self.player1_hand}")
-            print(f"{self.player2}'s playable cards: {self.player2_hand}\n")
+            print(f"{self.player1}'s playable cards: {p1_playable}")
+            print(f"{self.player2}'s playable cards: {p2_playable}\n")
             
-            self.turn()
-            winner = self.check_for_winner([self.player1_hand, self.player2_hand])
+            self.turn(drawn_value)
+            
+            print(f"After this turn: ")
+            print(f"{self.player1}'s hand: {self.player1_hand}")
+            print(f"{self.player2}'s hand: {self.player2_hand}\n")
+            
+            winner = self.check_for_winner()
+            round_num += 1
+        
+        print(f"{winner} is the WINNER!")
         
        
 def main():
