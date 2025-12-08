@@ -98,6 +98,10 @@ equation_deck = {
 }
 
 class NumberMatch:
+    """
+    Represents a two-player math-based card game where players match equations 
+    to drawn value cards.
+    """
     
     def __init__(self, player1, player2):
         """
