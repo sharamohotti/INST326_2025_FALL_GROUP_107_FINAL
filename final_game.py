@@ -107,15 +107,11 @@ class MathCardGame:
         self.value_deck = []
         self.player1_hand = []
         self.player2_hand = []
-        self.used_values = []
-        self.used_equation = []
-        self.first_game_run = True
         
         self.used_values = []
         self.used_equation = []
         
     def shuffle_decks(self):
-<<<<<<< HEAD
         """
             The shuffle_decks method uses the equation deck dictionary to 
             rearrange the order of the equation deck and value deck when first 
@@ -126,22 +122,6 @@ class MathCardGame:
                           equation_deck while also printing shuffle messages.
             Return (None): Only meant for the first run of the game. 
         """
-=======
-                
-        if first_game_run:
-            for value in range(1,11):
-                self.value_deck.append(value)
-            random.shuffle(self.value_deck)
-                
-            for key, equations in equation_deck.items():
-                for equation in equations:
-                    self.equation_deck.append(equation)
-            random.shuffle(self.equation_deck)
-            print("All cards have been shuffled")
-            first_game_run = False
-            return
-        
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
         if len(self.value_deck) == 0:
             if self.used_values:
                 print("All value cards have been used. Reshuffling the value deck.")
@@ -164,12 +144,7 @@ class MathCardGame:
 
         print("Decks have been shuffled.")
     
-<<<<<<< HEAD
     
-=======
-    # add self in parameter, equations_list might not be nesscary and instead 
-    # of eqautions_deck use self.equation_deck.
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
     def deal_cards(self, num_players):
         deck = copy.deepcopy(self.equation_deck)
         hands = []
@@ -182,10 +157,6 @@ class MathCardGame:
 
         return hands, deck
 
-<<<<<<< HEAD
-=======
-    # use self in parameter
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
     def find_playable_cards(self, player_hand, drawn_value):
         return [
             equation
@@ -196,7 +167,6 @@ class MathCardGame:
     def draw_value_card(self, num_cards: int = 1):
         if num_cards <= 0:
             raise ValueError("num_cards must be at least 1")
-<<<<<<< HEAD
 
         drawn_values = []
 
@@ -225,33 +195,6 @@ class MathCardGame:
         return card
             
     
-=======
-
-        drawn_values = []
-
-        for _ in range(num_cards):
-            if len(self.value_deck) == 0:
-                self.shuffle_decks()
-
-            value = self.value_deck.pop()
-            drawn_values.append(value)
-
-            # Track used values so shuffle_decks can rebuild the deck later
-            self.used_values.append(value)
-
-        return drawn_values[0] if num_cards == 1 else drawn_values
-    
-    # add self in parameter and try and see if you can use self.playerhand1 
-    # and self.playerhand2 (if it helps I have a set up in the display game)
-    def check_for_winner(self):
-        if len(self.player1_hand) == 0:
-            return self.player1
-    # conditional expression used here ↓
-        return self.player2 if len(self.player2_hand) == 0 else None
-
-        
-    # use self in parameter.
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
     def turn(self, drawn_value):
     
         p1_playable = self.find_playable_cards(self.player1_hand, drawn_value)
@@ -259,7 +202,6 @@ class MathCardGame:
 
     #PLAYER 1
         if p1_playable:
-<<<<<<< HEAD
             print(f"{self.player1}, you may play: {p1_playable}")
             choice = input("Choose a card to play: ")
 
@@ -274,18 +216,6 @@ class MathCardGame:
             new_card = self.draw_equation_card()#
             self.player1_hand.append(new_card)#
             print(f"{self.player1} drew {new_card}.\n")#
-=======
-           print(f"{self.player1}, you may play: {p1_playable}")
-           choice = input("Choose a card to play: ")
-
-        # Keep asking until player chooses a legal card
-           while choice not in p1_playable:
-            choice = input("Invalid choice. Choose again: ")
-
-           self.player1_hand.remove(choice)
-        else:
-           print(f"{self.player1} has no playable cards and passes.")
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
 
     #PLAYER 2 
         if p2_playable:
@@ -296,7 +226,6 @@ class MathCardGame:
                 choice = input("Invalid choice. Choose again: ")
 
             self.player2_hand.remove(choice)
-<<<<<<< HEAD
             self.used_equation.append(choice)#
         else:
             print(f"{self.player2} has no playable cards and passes.")
@@ -304,17 +233,6 @@ class MathCardGame:
             self.player2_hand.append(new_card)#
             print(f"{self.player2} drew {new_card}.\n")#
 
-=======
-        else:
-            print(f"{self.player2} has no playable cards and passes.")
-
-     
-
-
-   
-         
-        
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
         
     def display_game(self):
         print("------- Welcome to the Math Game -------\n")
@@ -347,7 +265,6 @@ class MathCardGame:
             print(f"{self.player2}'s playable cards: {p2_playable}\n")
             
             self.turn(drawn_value)
-<<<<<<< HEAD
             
             print(f"After this turn: ")
             print(f"{self.player1}'s hand: {self.player1_hand}")
@@ -357,9 +274,6 @@ class MathCardGame:
             round_num += 1
         
         print(f"{winner} is the WINNER!")
-=======
-            winner = self.check_for_winner([self.player1_hand, self.player2_hand])
->>>>>>> bac3acdba3e91053eef625d946eaf88b607e17a8
         
        
 def main():
