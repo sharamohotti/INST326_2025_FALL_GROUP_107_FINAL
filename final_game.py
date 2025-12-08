@@ -109,10 +109,10 @@ class MathCardGame:
         self.player2_hand = []
         self.used_values = []
         self.used_equation = []
+        self.first_game_run = True
         
     def shuffle_decks(self):
-        first_game_run = True
-        
+                
         if first_game_run:
             for value in range(1,11):
                 self.value_deck.append(value)
@@ -164,26 +164,17 @@ class MathCardGame:
         if num_cards <= 0:
             raise ValueError("num_cards must be at least 1")
 
-        def _refresh_deck():
-            self.value_deck = []
-            for v in range(1, 11):
-                self.value_deck.append(v)
-            random.shuffle(self.value_deck)
-
-        if not self.value_deck:
-            _refresh_deck()
-
         drawn_values = []
 
         for _ in range(num_cards):
-            if not self.value_deck:
-                _refresh_deck()
+            if len(self.value_deck) == 0:
+                self.shuffle_decks()
 
             value = self.value_deck.pop()
             drawn_values.append(value)
 
-            if hasattr(self, "used_values"):
-                self.used_values.append(value)
+            # Track used values so shuffle_decks can rebuild the deck later
+            self.used_values.append(value)
 
         return drawn_values[0] if num_cards == 1 else drawn_values
     
