@@ -210,11 +210,13 @@ class NumberMatch:
         """
         
         # Generator expression wrapped in list() for return
-        return (
+        gen_expression = (
             equation
             for equation in player_hand
             if eval(equation) == drawn_value
         )
+        return list(gen_expression)
+        
             
     def draw_value_card(self, num_cards: int = 1):
         """
