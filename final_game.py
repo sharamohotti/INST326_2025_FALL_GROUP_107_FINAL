@@ -1,5 +1,6 @@
 import sys
 import random
+import copy
 
 equation_deck = {
     1: ["1+0",
@@ -137,19 +138,15 @@ class MathCardGame:
     
     # add self in parameter, equations_list might not be nesscary and instead 
     # of eqautions_deck use self.equation_deck.
-    def deal_cards(equations_list, num_players):
-        deck = []
-        for card, card_list in equation_deck.items():
-           for equation in card_list:
-            deck.append(equation)
+    def deal_cards(self, num_players):
+        deck = copy.deepcopy(self.equation_deck)
         hands = []
 
         for player in range(num_players):
             player_hand = random.sample(deck, 7)
             hands.append(player_hand)
-    
-        for card in player_hand:
-            deck.remove(card)
+            for card in player_hand:
+                deck.remove(card)
 
         return hands, deck
 
