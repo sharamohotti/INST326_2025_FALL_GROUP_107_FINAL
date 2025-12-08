@@ -24,8 +24,8 @@
 |---------------------|--------------------------|-------------------------------------------|
 | suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
 | display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
-| deal_cards          | Shara Mohotti Arachchige | Comprehensions
-| check_for_winner    | Shara Mohotti Arachchige | Conditional expressions
-| player_turn         | Shara Mohotti Arachchige | 
-| find_playable_cards | Murad Habtu              | 
-| draw_value_card     | Murad Habtu              |
+| deal_cards          | Shara Mohotti Arachchige | Comprehensions                            |
+| check_for_winner    | Shara Mohotti Arachchige | Conditional expressions                   |
+| player_turn         | Shara Mohotti Arachchige |                                           |
+| find_playable_cards | Murad Habtu              | Generator expression                      |
+| draw_value_card     | Murad Habtu              | Optional parameter                        |
