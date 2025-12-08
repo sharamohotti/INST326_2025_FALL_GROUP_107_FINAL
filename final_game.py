@@ -147,8 +147,8 @@ class MathCardGame:
         for player in range(num_players):
             player_hand = random.sample(deck, 7)
             hands.append(player_hand)
-            for card in player_hand:
-                deck.remove(card)
+            #list comprehension
+            deck = [card for card in deck if card not in player_hand]
 
         return hands, deck
 
@@ -190,16 +190,11 @@ class MathCardGame:
     # add self in parameter and try and see if you can use self.playerhand1 
     # and self.playerhand2 (if it helps I have a set up in the display game)
     def check_for_winner(self):
-         current = [self.player1_hand, self.player2_hand]
-         for i in range(len(current)):   
-            if len(i) == 0: 
-               if i == 0:
-                    return self.player1
-               else:
-                    return self.player2
-                                            
+        if len(self.player1_hand) == 0:
+            return self.player1
+    # conditional expression used here ↓
+        return self.player2 if len(self.player2_hand) == 0 else None
 
-         return None
         
     # use self in parameter.
     def turn(self, drawn_value):
