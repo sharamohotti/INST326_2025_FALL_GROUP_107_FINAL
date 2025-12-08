@@ -399,7 +399,6 @@ def main():
     This uses a NumberMatch game instace with empty player names and starts 
     the game by calling the display_game() method.
     """
-    
     game = NumberMatch("","")
     game.display_game()
     
@@ -408,5 +407,4 @@ if __name__ == "__main__":
     """
     Makes sure the NumberMatch game runs when it is executed. 
     """
-    
     main()
