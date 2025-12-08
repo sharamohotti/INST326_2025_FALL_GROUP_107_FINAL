@@ -17,15 +17,17 @@
   8. This will continue until someone has no cards left to match. 
 
 ## Annotated Bibliography:
-
+  For this we mainly went off lecture videos and past practices/exercises from class. We didn't really use anything that was wasn't from class mainly looking at the
+  hangman.py file for understanding how the game should be set up.
 
 ## Attribution:
-|       Method        |      Primary Author      |          Techniques Demonstrated          |
-|---------------------|--------------------------|-------------------------------------------|
-| suffle_decks        | Jordan Stone             | Sequence Unpacking                        |
-| display_game        | Jordan Stone             | f-strings Containing Multiple Expressions |
-| deal_cards          | Shara Mohotti Arachchige | Comprehensions                            |
-| check_for_winner    | Shara Mohotti Arachchige | Conditional expressions                   |
-| player_turn         | Shara Mohotti Arachchige |                                           |
-| find_playable_cards | Murad Habtu              | Generator expression                      |
-| draw_value_card     | Murad Habtu              | Optional parameter                        |
+|        Method         |      Primary Author      |          Techniques Demonstrated          |
+|-----------------------|--------------------------|-------------------------------------------|
+| suffle_decks()        | Jordan Stone             | Sequence Unpacking                        |
+| display_game()        | Jordan Stone             | f-strings Containing Multiple Expressions |
+| draw_equation_card()  | Jordan Stone             | None                                      |
+| deal_cards()          | Shara Mohotti Arachchige | Comprehensions                            |
+| check_for_winner()    | Shara Mohotti Arachchige | Conditional expressions                   |
+| turn()                | Shara Mohotti Arachchige | None                                      |
+| find_playable_cards() | Murad Habtu              | Generator expression                      |
+| draw_value_card()     | Murad Habtu              | Optional parameter                        |
